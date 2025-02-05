@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Diferença de Datas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Diferença de Datas</h2>
+        <input type="date" id="data1"> <br>
+        <input type="date" id="data2"> <br>
+        <button onclick="calcularDiferenca()">Adicionar Período</button>
+        <h3 id="resultado"></h3>
+        <h3 id="total"></h3>
+    </div>
+
+    <script>
+        let totalDias = 0;
+
+        function calcularDiferenca() {
+            let data1 = new Date(document.getElementById('data1').value);
+            let data2 = new Date(document.getElementById('data2').value);
+            
+            if (!data1 || !data2 || isNaN(data1) || isNaN(data2)) {
+                document.getElementById('resultado').innerText = "Por favor, insira duas datas válidas.";
+                return;
+            }
+            
+            let diffMs = Math.abs(data2 - data1);
+            let diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            totalDias += diffDias;
+            
+            let anos = Math.floor(diffDias / 365);
+            let meses = Math.floor((diffDias % 365) / 30);
+            let dias = (diffDias % 365) % 30;
+            
+            document.getElementById('resultado').innerText = `Período: ${anos} anos, ${meses} meses, ${dias} dias`;
+            
+            let totalAnos = Math.floor(totalDias / 365);
+            let totalMeses = Math.floor((totalDias % 365) / 30);
+            let totalDiasRestantes = (totalDias % 365) % 30;
+            
+            document.getElementById('total').innerText = `Total acumulado: ${totalAnos} anos, ${totalMeses} meses, ${totalDiasRestantes} dias`;
+        }
+    </script>
+</body>
+</html>
