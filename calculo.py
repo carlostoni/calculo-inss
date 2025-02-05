@@ -1,29 +1,38 @@
 from datetime import datetime
 
-def calcular_diferenca_datas(lista_datas):
-    total_dias = 0
-    for i in range(len(lista_datas) - 1):
-        data_inicial = datetime.strptime(lista_datas[i], "%d/%m/%Y")
-        data_final = datetime.strptime(lista_datas[i + 1], "%d/%m/%Y")
-        total_dias += abs((data_final - data_inicial).days)
+def calcular_diferenca(data1, data2):
+    data_inicial = datetime.strptime(data1, "%d/%m/%Y")
+    data_final = datetime.strptime(data2, "%d/%m/%Y")
+    diferenca = abs((data_final - data_inicial).days)
     
-    # Converte total de dias para anos, meses e dias
-    anos = total_dias // 365
-    meses = (total_dias % 365) // 30  # Aproximação de meses
-    dias = (total_dias % 365) % 30  # Dias restantes
+    anos = diferenca // 365
+    meses = (diferenca % 365) // 30
+    dias = (diferenca % 365) % 30
     
-    return f"{anos} anos, {meses} meses, {dias} dias"
+    return anos, meses, dias
 
-# Pergunta ao usuário as datas
-lista_de_datas = []
+total_dias = 0
+periodos = []
+
 while True:
-    entrada = input("Digite uma data no formato DD/MM/YYYY (ou 'sair' para finalizar): ")
-    if entrada.lower() == 'sair':
+    data1 = input("Digite a primeira data (DD/MM/YYYY) ou 'sair' para finalizar: ")
+    if data1.lower() == 'sair':
         break
-    lista_de_datas.append(entrada)
+    data2 = input("Digite a segunda data (DD/MM/YYYY): ")
+    
+    anos, meses, dias = calcular_diferenca(data1, data2)
+    diferenca_dias = anos * 365 + meses * 30 + dias
+    total_dias += diferenca_dias
+    periodos.append(f"Período: {anos} anos, {meses} meses, {dias} dias")
 
-if len(lista_de_datas) < 2:
-    print("É necessário inserir pelo menos duas datas para calcular a diferença.")
-else:
-    resultado = calcular_diferenca_datas(lista_de_datas)
-    print("Diferença total:", resultado)
+# Calcula o total acumulado
+total_anos = total_dias // 365
+total_meses = (total_dias % 365) // 30
+total_dias_restantes = (total_dias % 365) % 30
+
+print("\nResumo dos períodos:")
+for periodo in periodos:
+    print(periodo)
+
+print(f"\nTotal acumulado: {total_anos} anos, {total_meses} meses, {total_dias_restantes} dias")
+
