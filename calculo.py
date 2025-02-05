@@ -7,16 +7,17 @@ def calcular_diferenca_datas(lista_datas):
         data_final = datetime.strptime(lista_datas[i + 1], "%d/%m/%Y")
         total_dias += abs((data_final - data_inicial).days)
     
-    # Converte total de dias para anos e meses aproximadamente
+    # Converte total de dias para anos, meses e dias
     anos = total_dias // 365
     meses = (total_dias % 365) // 30  # Aproximação de meses
+    dias = (total_dias % 365) % 30  # Dias restantes
     
-    return f"{anos} anos, {meses} meses"
+    return f"{anos} anos, {meses} meses, {dias} dias"
 
 # Pergunta ao usuário as datas
 lista_de_datas = []
 while True:
-    entrada = input("Digite uma data no formato DD/MM/YY (ou 'sair' para finalizar): ")
+    entrada = input("Digite uma data no formato DD/MM/YYYY (ou 'sair' para finalizar): ")
     if entrada.lower() == 'sair':
         break
     lista_de_datas.append(entrada)
